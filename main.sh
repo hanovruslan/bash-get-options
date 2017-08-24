@@ -24,7 +24,7 @@ declare -A dict=(
 
 options=$(bgo_get_options ${@} "$(declare -p dict)" 2>/dev/null)
 eval "declare -A options=${options#*=}"
-bgo_export_name ${x} "X default value"
-bgo_export_name ${y} "NOT x default value"
+bgo_export_name ${x} ${xvar:-"x var default"}
+bgo_export_name ${y} ${yvar:-"NOT x var default"}
 echo "${x} = "${!x}
 echo "${y} = ${!y}"
