@@ -15,16 +15,22 @@ self_dir="$(dirname $(readlink -f ${0}))/src"
 
 source "${self_dir}/src.sh"
 
-x=xvar
-y=yvar
 declare -A dict=(
- [x]=${x}
- [y]=${y}
+  [x]=xvar
+  [y]=yvar
+)
+defaults=(
+  [xvar]="x var default"
+  [yvar]="y var default"
 )
 
 options=$(bgo_get_options ${@} "$(declare -p dict)" 2>/dev/null)
 eval "declare -A options=${options#*=}"
-bgo_export_name ${x} ${xvar:-"x var default"}
-bgo_export_name ${y} ${yvar:-"NOT x var default"}
-echo "${x} = "${!x}
-echo "${y} = ${!y}"
+for var in ${dict[@]}
+do
+  eval "declare -A ${var}=${options[${var}]}"
+  bgo_export_name ${var} ${!var[@]:-${defaults[$var]}}
+done
+
+echo "xvar = ${xvar[@]}"
+echo "yvar = ${yvar[@]}"
