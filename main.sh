@@ -19,7 +19,7 @@ declare -A dict=(
   [x]=xvar
   [y]=yvar
 )
-defaults=(
+declare -A defaults=(
   [xvar]="x var default"
   [yvar]="y var default"
 )
