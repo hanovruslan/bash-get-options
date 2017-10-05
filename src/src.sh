@@ -1,7 +1,7 @@
 #@IgnoreInspection BashAddShebang
 function bgo_export_name () {
-  local option_name=${1}
-  local default_value=${2}
+  local option_name="${1}"
+  local default_value="${@:2}"
 
   [[ -z ${options[${option_name}]} ]] \
   && export ${option_name}="${default_value}" \
