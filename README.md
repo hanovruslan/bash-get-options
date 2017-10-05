@@ -16,7 +16,6 @@ try
 1. include line `source /path/to/this/repo/src/src.sh`
 1. set up your args dict 
 
-        code block
         declare -A dict=(
           [f]=foo
           [b]=bar
