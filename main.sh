@@ -34,3 +34,7 @@ done
 
 echo "xvar = ${xvar[@]}"
 echo "yvar = ${yvar[@]}"
+for x in ${xvar[@]}
+do
+    echo ${x}
+done
