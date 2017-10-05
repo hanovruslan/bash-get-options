@@ -1,31 +1,44 @@
 # bash-get-options #
 
-get options from script args 
+get options from script args
 
-try 
+try
 
 - `./main.sh`
 - `./main.sh -x foo`
 - `./main.sh -y bar`
 - `./main.sh -x bar -y foo`
 - `./main.sh -y bar -x foo`
+- `./main.sh -x bar -x foo`
 
 ## How to include into your script/project ##
 
 1. `git clone` this repo
 1. include line `source /path/to/this/repo/src/src.sh`
-1. set up your args dict 
+1. set up your args dict and defaults
 
         declare -A dict=(
-          [f]=foo
-          [b]=bar
+            [x]=xvar
+            [y]=yvar
         )
-1. add args processing snippet
+        defaults=(
+            [xvar]="x var default"
+            [yvar]="y var default"
+        )
+1. add args processing snippet and export vars into current process
 
         options=$(bgo_get_options ${@} "$(declare -p dict)" 2>/dev/null)
         eval "declare -A options=${options#*=}"
-1. export vars into current process
+        for var in ${dict[@]}
+        do
+            eval "declare -A ${var}=${options[${var}]}"
+            bgo_export_name ${var} ${!var[@]:-${defaults[$var]}}
+        done
+1. now you can use it as array values
 
-        bgo_export_name foo ${foo:-"foo default value"}
-        bgo_export_name bar ${bar:-"bar default value"}
-1. now you can use it
+        echo "xvar = ${xvar[@]}"
+        echo "yvar = ${yvar[@]}"
+        for x in ${xvar[@]}
+        do
+            echo ${x}
+        done
