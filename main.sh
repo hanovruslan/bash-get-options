@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 ## ####################
 ## $ ./main.sh
 ## or
@@ -10,31 +9,27 @@
 ## $ ./main.sh -x bar -y foo
 ## or
 ## $ ./main.sh -y bar -x foo
+## ####################
 
-self_dir="$(dirname $(readlink -f ${0}))/src"
+_source="$(dirname $(readlink -f ${BASH_SOURCE[0]}))/src"
+source "${_source}/env.sh"
+source "${_source}/src.sh"
 
-source "${self_dir}/src.sh"
-
-declare -A dict=(
+declare -A options_dict=(
   [x]=xvar
   [y]=yvar
 )
-declare -A defaults=(
-  [xvar]="x var default"
-  [yvar]="y var default"
+declare -A options_defaults=(
+  [xvar]="xvalue"
+  [yvar]="y1 y2 y3"
 )
-
-options=$(bgo_get_options ${@} "$(declare -p dict)" 2>/dev/null)
-eval "declare -A options=${options#*=}"
-for var in ${dict[@]}
+options=$(bgo_get_options ${#} ${@} options_dict options_defaults)
+options=$(t=${options#*=} && echo ${t:1:-1})
+declare -A options="${options}"
+for key in ${!options_dict[@]}
 do
-  eval "declare -A ${var}=${options[${var}]}"
-  bgo_export_name ${var} ${!var[@]:-${defaults[$var]}}
+  export ${options_dict[$key]}="${options[${options_dict[${key}]}]}"
 done
-
 echo "xvar = ${xvar[@]}"
 echo "yvar = ${yvar[@]}"
-for x in ${xvar[@]}
-do
-    echo ${x}
-done
+for _y in ${yvar[@]}; do echo ${_y}; done
