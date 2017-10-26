@@ -1,4 +1,5 @@
 #@IgnoreInspection BashAddShebang
+source "$(dirname $(readlink -f ${BASH_SOURCE[0]}))/env.sh"
 bgo_get_options () {
   index=${1}
   declare -A \

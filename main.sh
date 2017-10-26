@@ -11,9 +11,7 @@
 ## $ ./main.sh -y bar -x foo
 ## ####################
 
-_source="$(dirname $(readlink -f ${BASH_SOURCE[0]}))/src"
-source "${_source}/env.sh"
-source "${_source}/src.sh"
+source "$(dirname $(readlink -f ${BASH_SOURCE[0]}))/src/src.sh"
 
 declare -A options_dict=(
   [x]=xvar
