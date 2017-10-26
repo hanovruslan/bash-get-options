@@ -32,4 +32,4 @@ do
 done
 echo "xvar = ${xvar[@]}"
 echo "yvar = ${yvar[@]}"
-for _y in ${yvar[@]}; do echo ${_y}; done
+for y in ${yvar[@]}; do echo ${y}; done
