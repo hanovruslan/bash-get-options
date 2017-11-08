@@ -65,6 +65,3 @@ bgo_explode () {
 bgo_fail () {
   echo ${1} >&2; exit 1
 }
-bgo_export () {
-  bgo_fail x
-}
