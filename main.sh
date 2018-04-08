@@ -21,13 +21,7 @@ declare -A options_defaults=(
   [xvar]="xvalue"
   [yvar]="y1 y2 y3"
 )
-options=$(bgo_get_options ${#} ${@} options_dict options_defaults)
-options=$(t=${options#*=} && echo ${t:1:-1})
-declare -A options="${options}"
-for key in ${!options_dict[@]}
-do
-  export ${options_dict[$key]}="${options[${options_dict[${key}]}]}"
-done
+bgo_main ${@}
 echo "xvar = ${xvar[@]}"
 echo "yvar = ${yvar[@]}"
 for y in ${yvar[@]}; do echo ${y}; done
