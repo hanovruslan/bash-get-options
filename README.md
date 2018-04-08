@@ -27,16 +27,8 @@ try
         )
 1. add args processing snippet and export vars into current process
 
-        options=$(bgo_get_options ${#} ${@} options_dict options_defaults)
-        options=$(t=${options#*=} && echo ${t:1:-1})
-        declare -A options="${options}"
+        bgo_main ${@}
 
-1. iterate over dict and export into current env
-
-        for key in ${!options_dict[@]}
-        do
-            export ${options_dict[$key]}="${options[${options_dict[${key}]}]}"
-        done
 1. now you can use it as array values
 
         echo "xvar = ${xvar[@]}"

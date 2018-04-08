@@ -65,3 +65,12 @@ bgo_explode () {
 bgo_fail () {
   echo ${1} >&2; exit 1
 }
+bgo_main () {
+  options=$(bgo_get_options ${#} ${@} options_dict options_defaults)
+  options=$(t=${options#*=} && echo ${t:1:-1})
+  declare -A options="${options}"
+  for key in ${!options_dict[@]}
+  do
+    export ${options_dict[$key]}="${options[${options_dict[${key}]}]}"
+  done
+}
